@@ -3,11 +3,9 @@ import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/react'
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 
-
-const Navbar = () => {
-  const location = false;
+const Navbar = ({ location }) => {
   return (
     <div className="bg-white py-3 shadow-2xl ">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
@@ -20,7 +18,16 @@ const Navbar = () => {
           </Link>
           <div className="flex gap-1 cursor-pointer text-gray-700 items-center">
             <MapPin className="text-red-500" />
-            <span>{location ? <div></div> : "Add Address"}</span>
+            <span>
+              {location ? (
+                <div className="-space-y-2">
+                  <p>{location.state_district}</p>
+                  <p>{location.state}</p>
+                </div>
+              ) : (
+                "Add Address"
+              )}
+            </span>
             <FaCaretDown />
           </div>
         </div>
@@ -68,12 +75,11 @@ const Navbar = () => {
           </Link>
           <div>
             <Show when="signed-out">
-          <SignInButton />
-          <SignUpButton />
-        </Show>
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
+              <SignInButton className="bg-red-500 text-white rounded-full px-3 py-1 cursor-pointer " />
+            </Show>
+            <Show when="signed-in">
+              <UserButton />
+            </Show>
           </div>
         </nav>
       </div>
